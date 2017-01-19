@@ -20,7 +20,7 @@ All text above, and the splash screen must be included in any redistribution
 
 #if ARDUINO >= 100
  #include "Arduino.h"
- #define WIRE_WRITE Wire.write
+ #define WIRE_WRITE Wire1.write
 #else
  #include "WProgram.h"
   #define WIRE_WRITE Wire.send
@@ -70,8 +70,8 @@ All text above, and the splash screen must be included in any redistribution
     SSD1306_96_16
 
     -----------------------------------------------------------------------*/
-//   #define SSD1306_128_64
-   #define SSD1306_128_32
+   #define SSD1306_128_64
+//   #define SSD1306_128_32
 //   #define SSD1306_96_16
 /*=========================================================================*/
 

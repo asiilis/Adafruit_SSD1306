@@ -30,7 +30,8 @@ All text above, and the splash screen below must be included in any redistributi
 
 #include <stdlib.h>
 
-#include <Wire.h>
+//#include <Wire.h>
+#include <i2c_t3.h>
 #include <SPI.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
@@ -203,7 +204,7 @@ void Adafruit_SSD1306::begin(uint8_t vccstate, uint8_t i2caddr, bool reset) {
   else
   {
     // I2C Init
-    Wire.begin();
+    Wire1.begin();
 #ifdef __SAM3X8E__
     // Force 400 KHz I2C, rawr! (Uses pins 20, 21 for SDA, SCL)
     TWI1->TWI_CWGR = 0;
@@ -320,10 +321,10 @@ void Adafruit_SSD1306::ssd1306_command(uint8_t c) {
   {
     // I2C
     uint8_t control = 0x00;   // Co = 0, D/C = 0
-    Wire.beginTransmission(_i2caddr);
-    Wire.write(control);
-    Wire.write(c);
-    Wire.endTransmission();
+    Wire1.beginTransmission(_i2caddr);
+    Wire1.write(control);
+    Wire1.write(c);
+    Wire1.endTransmission();
   }
 }
 
@@ -469,14 +470,14 @@ void Adafruit_SSD1306::display(void) {
     // I2C
     for (uint16_t i=0; i<(SSD1306_LCDWIDTH*SSD1306_LCDHEIGHT/8); i++) {
       // send a bunch of data in one xmission
-      Wire.beginTransmission(_i2caddr);
+      Wire1.beginTransmission(_i2caddr);
       WIRE_WRITE(0x40);
       for (uint8_t x=0; x<16; x++) {
         WIRE_WRITE(buffer[i]);
         i++;
       }
       i--;
-      Wire.endTransmission();
+      Wire1.endTransmission();
     }
 #ifdef TWBR
     TWBR = twbrbackup;
